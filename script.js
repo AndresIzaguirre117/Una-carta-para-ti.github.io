@@ -54,7 +54,7 @@ function renderSongs() {
 
     const hint = document.createElement("div");
     hint.className = "song-hint";
-    //hint.textContent = "o toca para abrirla";
+    hint.textContent = "Escaneela o toque para abrir Spotify";
     a.appendChild(hint);
 
     box.appendChild(a);
