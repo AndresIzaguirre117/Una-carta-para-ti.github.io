@@ -5,7 +5,7 @@
 //  Funciona también con álbumes, playlists y artistas.
 // ============================================================
 const SONGS = [
-  { title: "Una canción para ti", artist: "", link: "https://open.spotify.com/intl-es/track/4ppTAJUbNXELZcoUaL90wo?si=024ff158216f4709" },
+  { title: "Una canción para ti", artist: "", link: "https://open.spotify.com/intl-es/track/51ZgWukMc1G5DailAaRbNP?si=3ba80ca426e2426a" },
 ];
 
 // Color de fondo del código (hex sin #) y color de las barras: "black" o "white"
