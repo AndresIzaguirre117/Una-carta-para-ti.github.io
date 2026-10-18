@@ -24,7 +24,7 @@ function renderSongs() {
 
   if (!items.length) return;
 
-  box.innerHTML = '<p class="songs-title">Escanéalo con Spotify</p>';
+ // box.innerHTML = '<p class="songs-title">Escanéalo con Spotify</p>';
   items.forEach((s) => {
     const a = document.createElement("a");
     a.className = "song-card";
