@@ -1,81 +1,82 @@
-// ============================================================
-//  CANCIONES DE SPOTIFY
-//  Pega aquí el enlace de cada canción (Spotify > ••• > Compartir
-//  > Copiar enlace de la canción). Puedes agregar las que quieras.
-//  Funciona también con álbumes, playlists y artistas.
-// ============================================================
-const SONGS = [
-  { title: "Una canción para ti", artist: "", link: "https://open.spotify.com/intl-es/track/51ZgWukMc1G5DailAaRbNP?si=b76a2eb4d97747be" },
-];
+/* =========================================
+   ELEMENTOS
+========================================= */
 
-// Color de fondo del código (hex sin #) y color de las barras: "black" o "white"
-const CODE_BG = "FFFDFB";
-const CODE_BARS = "black";
+const envelope = document.getElementById("envelopeContainer");
+const instruction = document.getElementById("instruction");
+const intro = document.getElementById("intro");
 
-function renderSongs() {
-  const box = document.getElementById("songs");
-  const items = SONGS.map((s) => {
-    const m = String(s.link).match(/(track|album|playlist|artist)[/:]([A-Za-z0-9]{22})/);
-    if (!m) return null;
-    const [, type, id] = m;
-    const img = `https://scannables.scdn.co/uri/plain/svg/${CODE_BG}/${CODE_BARS}/640/spotify:${type}:${id}`;
-    return { ...s, url: `https://open.spotify.com/${type}/${id}`, img };
-  }).filter(Boolean);
 
-  if (!items.length) return;
+/* =========================================
+   ESTADO DE LA ANIMACIÓN
 
- // box.innerHTML = '<p class="songs-title">Escanéalo con Spotify</p>';
-  items.forEach((s) => {
-    const a = document.createElement("a");
-    a.className = "song-card";
-    a.href = s.url;
-    a.target = "_blank";
-    a.rel = "noopener";
+   0 = sobre cerrado
+   1 = sobre abierto
+   2 = carta saliendo
+   3 = carta completa
+========================================= */
 
-    const name = document.createElement("div");
-    name.className = "song-name";
-    name.textContent = s.title || "Una canción para ti";
-    a.appendChild(name);
+let state = 0;
 
-    if (s.artist) {
-      const artist = document.createElement("div");
-      artist.className = "song-artist";
-      artist.textContent = s.artist;
-      a.appendChild(artist);
+
+/* =========================================
+   CLICK PRINCIPAL
+========================================= */
+
+envelope.addEventListener("click", () => {
+
+    /* -----------------------------
+       PASO 1
+       Abrir sobre
+    ----------------------------- */
+
+    if (state === 0) {
+
+        state = 1;
+
+        envelope.classList.add("open");
+
+        intro.classList.add("hidden");
+
+        instruction.textContent =
+            "Haz clic en la carta";
+
+        return;
     }
 
-    const code = document.createElement("img");
-    code.className = "song-code";
-    code.src = s.img;
-    code.alt = `Código de Spotify de ${s.title || "la canción"}`;
-    code.loading = "lazy";
-    code.addEventListener("error", () => code.remove());
-    a.appendChild(code);
 
-    const hint = document.createElement("div");
-    hint.className = "song-hint";
-    //hint.textContent = "o toca para abrirla";
-    a.appendChild(hint);
+    /* -----------------------------
+       PASO 2
+       Sacar carta
+    ----------------------------- */
 
-    box.appendChild(a);
-  });
-  box.hidden = false;
-}
+    if (state === 1) {
 
-renderSongs();
+        state = 2;
 
-const scene = document.querySelector(".scene");
-const replayButton = document.getElementById("replay");
+        envelope.classList.add("out");
 
-replayButton.addEventListener("click", () => {
-  // Reinicia las animaciones CSS para volver a dibujar el corazón.
-  scene.classList.remove("replaying");
-  void scene.offsetWidth;
-  scene.classList.add("replaying");
-});
+        instruction.textContent =
+            "Haz clic en la carta para abrirla";
 
-scene.addEventListener("animationend", (event) => {
-  if (event.animationName === "greetingIn") {
-    scene.classList.remove("replaying");
-  }
+        return;
+    }
+
+
+    /* -----------------------------
+       PASO 3
+       Mostrar carta completa
+    ----------------------------- */
+
+    if (state === 2) {
+
+        state = 3;
+
+        envelope.classList.add("full");
+
+        instruction.classList.add("hide");
+
+        return;
+    }
+
 });
