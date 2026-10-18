@@ -5,7 +5,7 @@
 //  Funciona también con álbumes, playlists y artistas.
 // ============================================================
 const SONGS = [
-  { title: "Una canción para ti", artist: "", link: "https://open.spotify.com/intl-es/track/51ZgWukMc1G5DailAaRbNP?si=b76a2eb4d97747be" },
+  { title: "Una canción para ti", artist: "", link: "https://open.spotify.com/intl-es/track/4ppTAJUbNXELZcoUaL90wo?si=024ff158216f4709" },
 ];
 
 // Color de fondo del código (hex sin #) y color de las barras: "black" o "white"
@@ -24,7 +24,7 @@ function renderSongs() {
 
   if (!items.length) return;
 
- // box.innerHTML = '<p class="songs-title">Escanéalo con Spotify</p>';
+  box.innerHTML = '<p class="songs-title">Escanéalo con Spotify</p>';
   items.forEach((s) => {
     const a = document.createElement("a");
     a.className = "song-card";
@@ -54,7 +54,7 @@ function renderSongs() {
 
     const hint = document.createElement("div");
     hint.className = "song-hint";
-    //hint.textContent = "o toca para abrirla";
+    hint.textContent = "o toca para abrirla";
     a.appendChild(hint);
 
     box.appendChild(a);
@@ -67,15 +67,19 @@ renderSongs();
 const scene = document.querySelector(".scene");
 const replayButton = document.getElementById("replay");
 
-replayButton.addEventListener("click", () => {
-  // Reinicia las animaciones CSS para volver a dibujar el corazón.
-  scene.classList.remove("replaying");
-  void scene.offsetWidth;
-  scene.classList.add("replaying");
-});
-
-scene.addEventListener("animationend", (event) => {
-  if (event.animationName === "greetingIn") {
+if (scene && replayButton) {
+  replayButton.addEventListener("click", () => {
+    // Reinicia las animaciones CSS para volver a dibujar el corazón.
     scene.classList.remove("replaying");
-  }
-});
+    void scene.offsetWidth;
+    scene.classList.add("replaying");
+  });
+}
+
+if (scene) {
+  scene.addEventListener("animationend", (event) => {
+    if (event.animationName === "greetingIn") {
+      scene.classList.remove("replaying");
+    }
+  });
+}
