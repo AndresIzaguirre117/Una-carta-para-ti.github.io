@@ -1,335 +1,643 @@
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+/* =========================================
+   CONFIGURACIÓN GENERAL
+========================================= */
 
-:root {
-  --bg: #fcecef;
-  --cream: #fffdfb;
-  --pink: #e8a3ae;
-  --pink-light: #f4c8ce;
-  --pink-dark: #b96b78;
-  --text: #4a3a3d;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-  min-height: 100vh;
-  overflow-x: hidden;
-  display: grid;
-  place-items: center;
-  color: var(--text);
-  font-family: Georgia, "Times New Roman", serif;
-  background:
-    radial-gradient(ellipse at 50% 45%, rgba(255,255,255,.95) 0%, rgba(255,248,249,.88) 28%, transparent 68%),
-    linear-gradient(135deg, #fff8f9 0%, var(--bg) 52%, #f6dce2 100%);
+    min-height: 100vh;
+    min-height: 100dvh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-family: Georgia, "Times New Roman", serif;
+
+    background:
+        radial-gradient(
+            circle at center,
+            #fff7f8 0%,
+            #fcecef 45%,
+            #f8dfe4 100%
+        );
+
+    overflow: hidden;
+
+    color: #4a3a3d;
 }
+
+
+/* =========================================
+   ESCENA
+========================================= */
 
 .scene {
-  position: relative;
-  isolation: isolate;
-  width: 100%;
-  min-height: 100vh;
-  padding: 30px 18px 24px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+
+    position: relative;
 }
 
-.eyebrow {
-  position: relative;
-  z-index: 2;
-  margin-bottom: -7px;
-  color: #a16a74;
-  font-size: clamp(13px, 2.2vw, 16px);
-  letter-spacing: 2.5px;
-  text-transform: uppercase;
-  opacity: 0;
-  transform: translateY(10px);
-  animation: fadeUp .8s ease .2s forwards;
+
+/* =========================================
+   TEXTO SUPERIOR
+========================================= */
+
+.intro {
+    position: absolute;
+
+    top: 11%;
+
+    font-size: 22px;
+
+    color: #9f6570;
+
+    letter-spacing: 1px;
+
+    opacity: 1;
+
+    transition:
+        opacity 0.8s ease,
+        transform 0.8s ease;
 }
 
-.heart-stage {
-  position: relative;
-  width: min(90vw, 520px);
-  aspect-ratio: 520 / 470;
-  display: grid;
-  place-items: center;
-  margin: 0 auto;
+.intro.hidden {
+    opacity: 0;
+    transform: translateY(-20px);
 }
 
-.heart-art {
-  width: 100%;
-  height: 100%;
-  overflow: visible;
-  filter: drop-shadow(0 16px 24px rgba(185, 107, 120, .15));
+
+/* =========================================
+   SOBRE
+========================================= */
+
+.envelope-container {
+
+    width: 340px;
+    height: 220px;
+
+    position: relative;
+
+    cursor: pointer;
+
+    perspective: 1200px;
+
+    transition:
+        transform 0.8s ease;
 }
 
-.heart-shadow {
-  fill: rgba(232, 163, 174, .10);
-  transform-origin: center;
-  animation: heartPulse 3s ease-in-out 2.4s infinite;
+
+/* =========================================
+   CARTA
+========================================= */
+
+.letter {
+
+    width: 300px;
+    height: 190px;
+
+    position: absolute;
+
+    left: 20px;
+    top: 15px;
+
+    background: #fff;
+
+    border-radius: 8px;
+
+    z-index: 2;
+
+    box-shadow:
+        0 8px 25px rgba(105, 65, 72, 0.15);
+
+    overflow: hidden;
+
+    transform:
+        translateY(0)
+        scale(1);
+
+    transition:
+        transform 1s cubic-bezier(.22,1,.36,1),
+        width 1s ease,
+        height 1s ease,
+        left 1s ease,
+        top 1s ease,
+        border-radius 1s ease,
+        z-index 0s linear 0.45s;
 }
 
-.heart-outline {
-  fill: transparent;
-  stroke: var(--pink-dark);
-  stroke-width: 4;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  stroke-dasharray: 1250;
-  stroke-dashoffset: 1250;
-  animation: drawHeart 2.1s cubic-bezier(.65, 0, .35, 1) .65s forwards;
-  filter: url(#softGlow);
+
+/* =========================================
+   CONTENIDO DE LA CARTA
+========================================= */
+
+.letter-content {
+
+    width: 100%;
+    height: 100%;
+
+    padding: 20px;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: space-between;
+    align-items: center;
+
+    text-align: center;
+
+    opacity: 0;
+
+    transition:
+        opacity 0.8s ease 0.4s;
 }
 
-.heart-fill {
-  fill: url(#heartGradient);
-  opacity: 0;
-  animation: fillHeart 1.1s ease 2.25s forwards;
+
+/* =========================================
+   FLORES
+========================================= */
+
+.flowers {
+
+    width: 180px;
+    height: 80px;
+
+    margin-top: 2px;
 }
 
-.shine {
-  fill: none;
-  stroke: rgba(255,255,255,.9);
-  stroke-width: 5;
-  stroke-linecap: round;
-  stroke-dasharray: 150;
-  stroke-dashoffset: 150;
-  animation: drawShine .8s ease 2.55s forwards;
+
+/* Tallos */
+
+.stem {
+
+    fill: none;
+
+    stroke: #7ca67b;
+
+    stroke-width: 3;
+
+    stroke-linecap: round;
 }
 
-.shine-small {
-  stroke-width: 3;
-  animation-delay: 2.8s;
+
+/* Hojas */
+
+.leaf {
+
+    fill: #91b88c;
+
+    stroke: #6f976c;
+
+    stroke-width: 1;
 }
 
-.greeting {
-  position: absolute;
-  z-index: 2;
-  top: 48%;
-  left: 50%;
-  width: 75%;
-  transform: translate(-50%, -50%) scale(.92);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 3px;
-  opacity: 0;
-  animation: greetingIn 1s cubic-bezier(.2, .8, .2, 1) 2.55s forwards;
+
+/* Tulipanes */
+
+.tulip {
+
+    fill: #e8a3ae;
+
+    stroke: #c77b88;
+
+    stroke-width: 1.5;
 }
 
-.greeting-line {
-  color: #fffdfb;
-  font-size: clamp(25px, 5.4vw, 43px);
-  line-height: 1.08;
-  text-shadow: 0 2px 9px rgba(142, 68, 82, .25);
+
+/* Rosas */
+
+.rose {
+
+    fill: #d88997;
+
+    stroke: #b86775;
+
+    stroke-width: 1.5;
 }
 
-.greeting-name {
-  color: #fffdfb;
-  font-size: clamp(37px, 8vw, 64px);
-  line-height: 1.08;
-  font-weight: bold;
-  text-shadow: 0 3px 12px rgba(142, 68, 82, .28);
+.rose-detail {
+
+    fill: none;
+
+    stroke: #f4c8ce;
+
+    stroke-width: 2;
+
+    stroke-linecap: round;
 }
 
-.tiny-heart {
-  margin-top: 5px;
-  color: #fff7f8;
-  font-size: clamp(20px, 4vw, 29px);
-  animation: tinyBeat 1.4s ease-in-out 3.5s infinite;
+
+/* =========================================
+   MENSAJE
+========================================= */
+
+.message {
+
+    width: 90%;
+
+    /* Ocupa el espacio central y, si el texto es largo, hace scroll */
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+
+    display: flex;
+    flex-direction: column;
+
+    margin: 8px 0;
+
+    font-size: 15px;
+
+    line-height: 1.7;
+
+    color: #554246;
 }
 
-.subtitle {
-  max-width: 430px;
-  margin-top: -13px;
-  padding: 0 12px;
-  color: #805861;
-  font-size: clamp(14px, 2.5vw, 18px);
-  line-height: 1.7;
-  opacity: 0;
-  animation: fadeUp .9s ease 3.1s forwards;
+/* Centra el texto verticalmente cuando es corto (sin cortarlo si es largo) */
+.message > :first-child {
+    margin-top: auto;
 }
 
-.petals {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  pointer-events: none;
-  z-index: -1;
+.message > :last-child {
+    margin-bottom: auto;
 }
 
-.petals span {
-  position: absolute;
-  color: rgba(201, 121, 135, .5);
-  font-size: 25px;
-  animation: floatPetal 7s ease-in-out infinite;
+.message p {
+    margin-bottom: 8px;
 }
 
-.petals span:nth-child(1) { top: 20%; left: 13%; animation-delay: -.8s; }
-.petals span:nth-child(2) { top: 32%; right: 15%; font-size: 19px; animation-delay: -2s; }
-.petals span:nth-child(3) { bottom: 25%; left: 17%; font-size: 20px; animation-delay: -3.4s; }
-.petals span:nth-child(4) { top: 17%; right: 28%; font-size: 14px; animation-delay: -1.5s; }
-.petals span:nth-child(5) { bottom: 30%; right: 13%; animation-delay: -4s; }
-.petals span:nth-child(6) { bottom: 18%; left: 34%; font-size: 15px; animation-delay: -2.7s; }
 
-.replay {
-  margin-top: 22px;
-  border: 1px solid rgba(185, 107, 120, .45);
-  border-radius: 999px;
-  padding: 10px 18px;
-  color: #965d68;
-  background: rgba(255, 253, 251, .62);
-  font: inherit;
-  font-size: 14px;
-  cursor: pointer;
-  opacity: 0;
-  animation: fadeUp .8s ease 3.5s forwards;
-  transition: transform .2s ease, background .2s ease, box-shadow .2s ease;
-}
-
-.replay:hover {
-  transform: translateY(-2px);
-  background: #fffdfb;
-  box-shadow: 0 7px 18px rgba(185, 107, 120, .14);
-}
-
-.replay:focus-visible {
-  outline: 3px solid #b96b78;
-  outline-offset: 4px;
-}
-
-.songs {
-  position: relative;
-  z-index: 2;
-  width: 100%;
-  max-width: 340px;
-  margin-top: 26px;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  opacity: 0;
-  transform: translateY(10px);
-  animation: fadeUp .9s ease 3.9s forwards;
-}
-
-.songs[hidden] { display: none; }
-
-.songs-title {
-  color: #a16a74;
-  font-size: 13px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-}
-
-.song-card {
-  display: block;
-  padding: 14px 16px 12px;
-  border-radius: 18px;
-  color: inherit;
-  text-decoration: none;
-  background: rgba(255, 253, 251, .85);
-  box-shadow: 0 8px 22px rgba(185, 107, 120, .15);
-  transition: transform .2s ease, box-shadow .2s ease;
-}
-
-.song-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 26px rgba(185, 107, 120, .22);
-}
-
-.song-name { font-size: 17px; font-weight: bold; line-height: 1.3; }
-.song-artist { margin-top: 2px; color: #805861; font-size: 14px; }
-
-.song-code {
-  display: block;
-  width: 100%;
-  height: auto;
-  margin-top: 10px;
-}
-
-.song-hint { margin-top: 6px; color: #a16a74; font-size: 12px; }
+/* =========================================
+   FIRMA
+========================================= */
 
 .signature {
-  position: relative;
-  margin-top: 28px;
-  color: #a16a74;
-  font-size: 12px;
-  letter-spacing: .7px;
-  opacity: .85;
+
+    font-size: 14px;
+
+    color: #b96b78;
+
+    font-style: italic;
 }
 
-.signature span { color: #c97987; }
 
-.scene.replaying .eyebrow,
-.scene.replaying .subtitle,
-.scene.replaying .songs,
-.scene.replaying .replay {
-  animation: none;
-  opacity: 0;
+/* =========================================
+   PARTE TRASERA DEL SOBRE
+========================================= */
+
+.envelope-back {
+
+    position: absolute;
+
+    width: 340px;
+    height: 220px;
+
+    left: 0;
+    top: 0;
+
+    background: #fffdfb;
+
+    border-radius: 6px;
+
+    z-index: 1;
+
+    box-shadow:
+        0 15px 35px rgba(105, 65, 72, 0.18);
+
+    transition:
+        opacity 0.6s ease;
 }
 
-.scene.replaying .heart-outline {
-  animation: none;
-  stroke-dashoffset: 1250;
+
+/* =========================================
+   PARTE FRONTAL DEL SOBRE
+========================================= */
+
+.envelope-front {
+
+    position: absolute;
+
+    width: 340px;
+    height: 220px;
+
+    left: 0;
+    top: 0;
+
+    z-index: 4;
+
+    background: #f7d6dc;
+
+    clip-path: polygon(
+        0 0,
+        50% 55%,
+        100% 0,
+        100% 100%,
+        0 100%
+    );
+
+    border-radius: 6px;
+
+    transition:
+        opacity 0.6s ease;
 }
 
-.scene.replaying .heart-fill {
-  animation: none;
-  opacity: 0;
+
+/* =========================================
+   SOLAPA
+========================================= */
+
+.envelope-flap {
+
+    position: absolute;
+
+    width: 340px;
+    height: 150px;
+
+    left: 0;
+    top: 0;
+
+    z-index: 5;
+
+    background: #efc3ca;
+
+    clip-path: polygon(
+        0 0,
+        100% 0,
+        50% 100%
+    );
+
+    transform-origin: top center;
+
+    transition:
+        transform 0.9s cubic-bezier(.22,1,.36,1),
+        opacity 0.6s ease;
+
+    backface-visibility: hidden;
 }
 
-.scene.replaying .shine {
-  animation: none;
-  stroke-dashoffset: 150;
+
+/* =========================================
+   CORAZÓN
+========================================= */
+
+.heart {
+
+    position: absolute;
+
+    left: 50%;
+    top: 47%;
+
+    transform:
+        translate(-50%, -50%);
+
+    z-index: 6;
+
+    font-size: 30px;
+
+    color: #c97987;
+
+    transition:
+        opacity 0.4s ease,
+        transform 0.4s ease;
 }
 
-.scene.replaying .greeting {
-  animation: none;
-  opacity: 0;
-  transform: translate(-50%, -50%) scale(.92);
+
+/* =========================================
+   INSTRUCCIÓN
+========================================= */
+
+.instruction {
+
+    position: absolute;
+
+    bottom: 13%;
+
+    font-size: 14px;
+
+    color: #a16a74;
+
+    letter-spacing: 0.5px;
+
+    transition:
+        opacity 0.6s ease;
 }
 
-.scene.replaying .heart-outline { animation: drawHeart 2.1s cubic-bezier(.65, 0, .35, 1) .65s forwards; }
-.scene.replaying .heart-fill { animation: fillHeart 1.1s ease 2.25s forwards; }
-.scene.replaying .shine { animation: drawShine .8s ease 2.55s forwards; }
-.scene.replaying .shine-small { animation: drawShine .8s ease 2.8s forwards; }
-.scene.replaying .greeting { animation: greetingIn 1s cubic-bezier(.2, .8, .2, 1) 2.55s forwards; }
-.scene.replaying .eyebrow { animation: fadeUp .8s ease .2s forwards; }
-.scene.replaying .subtitle { animation: fadeUp .9s ease 3.1s forwards; }
-.scene.replaying .replay { animation: fadeUp .8s ease 3.5s forwards; }
-.scene.replaying .songs { animation: fadeUp .9s ease 3.9s forwards; }
 
-@keyframes drawHeart { to { stroke-dashoffset: 0; } }
-@keyframes fillHeart { to { opacity: 1; } }
-@keyframes drawShine { to { stroke-dashoffset: 0; } }
-@keyframes greetingIn {
-  0% { opacity: 0; transform: translate(-50%, -43%) scale(.92); }
-  70% { opacity: 1; transform: translate(-50%, -52%) scale(1.025); }
-  100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-}
-@keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
-@keyframes heartPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.018); } }
-@keyframes tinyBeat { 0%, 100% { transform: scale(1); } 18% { transform: scale(1.22); } 34% { transform: scale(1); } }
-@keyframes floatPetal {
-  0%, 100% { transform: translateY(0) rotate(0deg); opacity: .45; }
-  50% { transform: translateY(-17px) rotate(12deg); opacity: .85; }
+/* =========================================
+   ESTADO 1:
+   SOBRE ABIERTO
+========================================= */
+
+.envelope-container.open .envelope-flap {
+    transform: rotateX(180deg);
+    pointer-events: none;
 }
 
-@media (max-width: 480px) {
-  .scene { padding-top: 20px; padding-bottom: 24px; }
-  .heart-stage { width: min(96vw, 420px); }
-  .eyebrow { letter-spacing: 1.5px; }
-  .subtitle { margin-top: -7px; max-width: 330px; }
+.envelope-container.open .heart {
+
+    opacity: 0;
+
+    transform:
+        translate(-50%, -50%)
+        scale(0.5);
 }
 
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: .01ms !important;
-    animation-iteration-count: 1 !important;
-    scroll-behavior: auto !important;
-  }
+.envelope-container.open .letter {
+    transform: translateY(-85px);
+}
+
+
+/* =========================================
+   ESTADO 2:
+   CARTA SALIENDO
+========================================= */
+
+.envelope-container.out .letter {
+
+    transform:
+        translateY(-150px);
+
+    z-index: 10;
+}
+
+
+/* =========================================
+   ESTADO 3:
+   CARTA COMPLETA
+========================================= */
+
+.envelope-container.full {
+
+    /* Tamaño final de la carta (se reutiliza abajo) */
+    --letter-w: min(90vw, 560px);
+    --letter-h: min(80vh, 620px);
+
+    cursor: default;
+}
+
+.envelope-container.full .envelope-back,
+.envelope-container.full .envelope-front,
+.envelope-container.full .envelope-flap,
+.envelope-container.full .heart {
+
+    opacity: 0;
+
+    pointer-events: none;
+}
+
+
+.envelope-container.full .letter {
+
+    width: var(--letter-w);
+
+    height: var(--letter-h);
+
+    /* Centro del sobre (340x220) menos la mitad de la carta */
+    left: calc(170px - var(--letter-w) / 2);
+
+    top: calc(110px - var(--letter-h) / 2);
+
+    transform: translateY(0);
+
+    border-radius: 12px;
+
+    z-index: 10;
+}
+
+
+.envelope-container.full .letter-content {
+
+    opacity: 1;
+}
+
+
+/* =========================================
+   OCULTAR INSTRUCCIÓN
+========================================= */
+
+.instruction.hide {
+
+    opacity: 0;
+}
+
+
+/* =========================================
+   ANIMACIÓN DE LAS FLORES
+========================================= */
+
+.envelope-container.full .tulip,
+.envelope-container.full .rose,
+.envelope-container.full .leaf {
+
+    animation:
+        flowerAppear 1s ease forwards;
+
+    transform-box: fill-box;
+    transform-origin: 50% 100%;
+}
+
+
+@keyframes flowerAppear {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateY(8px)
+            scale(0.85);
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            scale(1);
+    }
+}
+
+
+/* =========================================
+   ANIMACIÓN SUAVE DEL SOBRE
+========================================= */
+
+.envelope-container:not(.open):hover {
+
+    transform:
+        translateY(-5px);
+}
+
+
+/* =========================================
+   RESPONSIVE - CELULAR
+========================================= */
+
+@media (max-width: 600px) {
+
+    .intro {
+
+        top: 9%;
+
+        font-size: 18px;
+    }
+
+
+    .envelope-container {
+
+        transform:
+            scale(0.85);
+    }
+
+
+    .envelope-container:not(.open):hover {
+
+        transform:
+            scale(0.85)
+            translateY(-5px);
+    }
+
+
+    .envelope-container.full {
+
+        transform:
+            scale(1);
+    }
+
+
+    .envelope-container.full {
+
+        --letter-w: 90vw;
+        --letter-h: 75vh;
+    }
+
+
+    .message {
+
+        font-size: 14px;
+
+        line-height: 1.6;
+
+        width: 92%;
+    }
+
+
+    .flowers {
+
+        width: 160px;
+
+        height: 75px;
+    }
 }
