@@ -54,7 +54,7 @@ function renderSongs() {
 
     const hint = document.createElement("div");
     hint.className = "song-hint";
-    hint.textContent = "o toca para abrirla";
+    //hint.textContent = "o toca para abrirla";
     a.appendChild(hint);
 
     box.appendChild(a);
