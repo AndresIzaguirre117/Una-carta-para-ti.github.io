@@ -13,8 +13,11 @@
   --text: #4a3a3d;
 }
 
+html { -webkit-text-size-adjust: 100%; }
+
 body {
   min-height: 100vh;
+  min-height: 100dvh;
   overflow-x: hidden;
   display: grid;
   place-items: center;
@@ -30,6 +33,7 @@ body {
   isolation: isolate;
   width: 100%;
   min-height: 100vh;
+  min-height: 100dvh;
   padding: 30px 18px 24px;
   display: flex;
   flex-direction: column;
@@ -324,6 +328,8 @@ body {
   .heart-stage { width: min(96vw, 420px); }
   .eyebrow { letter-spacing: 1.5px; }
   .subtitle { margin-top: -7px; max-width: 330px; }
+  .songs { max-width: 300px; margin-top: 22px; }
+  .song-name { font-size: 16px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
